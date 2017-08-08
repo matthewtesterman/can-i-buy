@@ -1,0 +1,449 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Can you afford it?</title>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Pathway+Gothic+One' rel='stylesheet' type='text/css'>
+<meta charset="UTF-8">
+<link href="assets/style.css" rel="stylesheet" type="text/css">
+<script src="assets/jquery-1.11.1.min.js"></script>
+<script>
+   
+$(document).ready(function(){
+  
+    $('input[class="numeric"]').change(function(){
+		
+		total = $(this).val().charAt(0);
+		if (total == "$")
+		{
+			total = $(this).val().substring(1); //Remove $ sign
+		}
+			else
+		
+		{
+			total =  $(this).val();
+		}
+		if(total.match(/^[0-9.]+$/)) {
+		total = Math.round(total);
+		if (isNaN(total))
+		{
+			$(this).val("$" + 0);
+		}
+		else
+		{
+			$(this).val("$" + total) ;
+		}
+		}
+		else
+		{
+			$(this).val("$" + 0);
+		}
+
+ addTotalIncome();
+ addMonthlyExpense();
+ addAutoExpense();
+ addLivingExpense();
+ addTotalExpenses();
+ addDebtExpense();
+ 
+ 
+ 
+  });
+  
+   $('input[class="percentage"]').change(function(){
+	  var totalP = $(this).val().charAt($(this).val().length - 1);
+	 
+		if (totalP == "%")
+		{
+			totalP = $(this).val().substring(0 , $(this).val().length - 1 ); //Remove % sign
+			
+		}
+		else
+		
+		{
+			totalP =  $(this).val();
+		}
+		if(totalP.match(/^[0-9.]+$/)) {
+		;
+		if (isNaN(totalP))
+		{
+			$(this).val( 0 + "%");
+		}
+		else
+		{
+			$(this).val(totalP + "%") ;
+		}
+		}
+		else
+		{
+			$(this).val( 0 + "%");
+		}
+	   
+   });
+  
+  
+  function addTotalIncome()
+  {
+	  totalSum = parseInt($('input[name="totalCheckings"]').val().substring(1)) + parseInt($('input[name="totalSavings"]').val().substring(1)) + parseInt($('input[name="totalNetIncome"]').val().substring(1));
+	 $('input[class="totalIncome"]').val('$' + totalSum);
+  }
+ 
+   function addMonthlyExpense()
+  {
+	  totalSum = parseInt($('input[name="utlities"]').val().substring(1)) + parseInt($('input[name="housePayment"]').val().substring(1)) + parseInt($('input[name="insurance"]').val().substring(1)) + parseInt($('input[name="maintenance"]').val().substring(1)) + parseInt($('input[name="additionalExpenses"]').val().substring(1));
+	 $('input[name="totalHousingExpense"]').val('$' + totalSum);
+  } 
+   function addAutoExpense()
+  {
+	  totalSum = parseInt($('input[name="autoPayment"]').val().substring(1)) + parseInt($('input[name="autoInsurance"]').val().substring(1)) + parseInt($('input[name="autoMaintenance"]').val().substring(1)) + parseInt($('input[name="autoGas"]').val().substring(1));
+	 $('input[name="totalAutoExpense"]').val('$' + totalSum);
+  }   
+     function addLivingExpense()
+  {
+	  totalSum = parseInt($('input[name="livingFood"]').val().substring(1)) + parseInt($('input[name="livingNonEssential"]').val().substring(1)) + parseInt($('input[name="livingOtherExpenses"]').val().substring(1));
+	 $('input[name="totalLivingExpense"]').val('$' + totalSum);
+  }   
+  
+  function addTotalExpenses()
+  {
+	  totalSum = parseInt($('input[name="totalHousingExpense"]').val().substring(1)) + parseInt($('input[name="totalAutoExpense"]').val().substring(1)) + parseInt($('input[name="totalLivingExpense"]').val().substring(1));
+	 $('input[name="totalExpenses"]').val('$' + totalSum);
+  }    
+     function addDebtExpense()
+  {
+	 // totalSum = parseInt($('input[name="creditCardDebt"]').val().substring(1)) + parseInt($('input[name="medicalExpensesDebt"]').val().substring(1)) + parseInt($('input[name="mortgageDebt"]').val().substring(1)) + parseInt($('input[name="studentLoanDebt"]').val().substring(1)) + parseInt($('input[name="homeEquiltyDebt"]').val().substring(1)) + parseInt($('input[name="autoLoanDebt"]').val().substring(1)) + parseInt($('input[name="personalLoanDebt"]').val().substring(1)) + parseInt($('input[name="otherDebt"]').val().substring(1));
+	  
+	  
+	  
+	 $('input[name="totalDebt"]').val('$' + totalSum);
+  } 
+  
+});
+
+</script>
+</head>
+
+<body>
+<form name="afford-it-form" action="results.php" method="post">
+  <div id="wrapper">
+    <p>&nbsp;</p>
+    <div id="box-content">
+      <div class="box-content-heading-title">
+        <p>Can you afford it?</p>
+      </div>
+      <div class="box-content-section">
+        <div class="box-content-heading-sub-main">
+          <p>Who are you?</p>
+        </div>
+        <div class="box-content-left">
+          <p>Name: </p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="name" type="text" id="person-name" value="Matt">
+          </p>
+        </div>
+      </div>
+      <div class="box-content-space">
+        <p>&nbsp;</p>
+      </div>
+      <div class="box-content-section">
+        <div class="box-content-heading-sub-main">
+          <p>What are you buying?</p>
+        </div>
+        <div class="box-content-left">
+          <p>How much will it cost?: </p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="itemAmount" class="numeric" type="text" id="item-amount" value="$0">
+          </p>
+        </div>
+      </div>
+      <div class="box-content-space">
+        <p>&nbsp;</p>
+      </div>
+      <div class="box-content-section">
+        <div class="box-content-heading-sub-main">
+          <p>Where is all your money?</p>
+        </div>
+        <div class="box-content-left">
+          <p>Total in Checking:</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="totalCheckings" class="numeric" type="text" id="item-amount2" value="$0">
+          </p>
+        </div>
+        <div class="box-content-left">
+          <p>Total in Savings:</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="totalSavings" class="numeric" type="text" id="item-amount2" value="$0">
+          </p>
+        </div>
+        <div class="box-content-left">
+          <p>Interest in Savings:</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="totalSavingsInterest" class="percentage" type="text" id="savings-interest" value="0%">
+          </p>
+        </div>
+        <div class="box-content-left">
+          <p>Total Net Income:</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="totalNetIncome" class="numeric"  type="text" id="item-amount2" value="$0">
+          </p>
+        </div>
+        <div class="box-content-space">
+          <p>&nbsp;</p>
+        </div>
+        <div class="box-content-total">
+          <div class="box-content-left">
+            <p>Total:</p>
+          </div>
+          <div class="box-content-right">
+            <p>
+              <input name="totalIncome" class="totalIncome" type="text" id="item-amount2" value="$0" readonly>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="box-content-space">
+        <p>&nbsp;</p>
+      </div>
+      <div class="box-content-section">
+        <div class="box-content-heading-sub-main">
+          <p>What is your monthly expenses?</p>
+        </div>
+        <div class="box-content-heading-sub">
+          <p>Monthly Housing Expenses:</p>
+        </div>
+        <div class="box-content-left">
+          <p>Utilities (Electric, Water, etc.):</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="utlities" type="text"  class="numeric"  id="utilities" value="$0">
+          </p>
+        </div>
+        <div class="box-content-left">
+          <p>Housing Payment:</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="housePayment" type="text"  class="numeric"  id="housePayment" value="$0">
+          </p>
+        </div>
+        <div class="box-content-left">
+          <p>Insurance:</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="insurance" type="text"  class="numeric"  id="insurance" value="$0">
+          </p>
+        </div>
+        <div class="box-content-left">
+          <p>Maintenance :</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="maintenance" class="numeric" type="text" id="maintenance" value="$0">
+          </p>
+        </div>
+        <div class="box-content-left">
+          <p>Additional Expenses:</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="additionalExpenses" class="numeric"  type="text" id="additionalExpenses" value="$0">
+          </p>
+        </div>
+        <div class="box-content-space">
+          <p>&nbsp;</p>
+        </div>
+        <div class="box-content-left">
+          <p>Total Housing Expense:</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="totalHousingExpense" type="text" id="totalHousingExpenses" value="$0" disabled>
+          </p>
+        </div>
+        <div class="box-content-space">
+          <p>&nbsp;</p>
+        </div>
+        <div class="box-content-heading-sub">
+          <p>Monthly Auto Expenses:</p>
+        </div>
+        <div class="box-content-left">
+          <p>Auto Loan/Lease Payment:</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="autoPayment" class="numeric" type="text" id="item-amount2" value="$0">
+          </p>
+        </div>
+        <div class="box-content-left">
+          <p>Insurance:</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="autoInsurance" class="numeric"  type="text" id="autoInsurance" value="$0">
+          </p>
+        </div>
+        <div class="box-content-left">
+          <p>Maintenance:</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="autoMaintenance"  class="numeric" type="text" id="autoMaintenance" value="$0">
+          </p>
+        </div>
+        <div class="box-content-left">
+          <p>Gas:</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="autoGas"  class="numeric" type="text" id="autoGas" value="$0">
+          </p>
+        </div>
+        <div class="box-content-space">
+          <p>&nbsp;</p>
+        </div>
+        <div class="box-content-left">
+          <p>Total Auto Expense:</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="totalAutoExpense" disabled type="text" id="totalAutoExpense" value="$0">
+          </p>
+        </div>
+        <div class="box-content-space">
+          <p>&nbsp;</p>
+        </div>
+        <div class="box-content-heading-sub">
+          <p>Monthly Living Expenses:</p>
+        </div>
+        <div class="box-content-left">
+          <p>Food:</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="livingFood" class="numeric"  type="text" id="livingFood" value="$0">
+          </p>
+        </div>
+        <div class="box-content-left">
+          <p>Non-essential :</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="livingNonEssential" class="numeric"   type="text" id="livingNonEssential" value="$0">
+          </p>
+        </div>
+        <div class="box-content-left">
+          <p>Other Expenses:</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="livingOtherExpenses"  class="numeric"  type="text" id="otherExpense" value="$0">
+          </p>
+        </div>
+        <div class="box-content-space">
+          <p>&nbsp;</p>
+        </div>
+        <div class="box-content-left">
+          <p>Total Living Expenses:</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="totalLivingExpense" class="numeric"  disabled type="text" id="livingExpense" value="$0">
+          </p>
+        </div>
+        <div class="box-content-space">
+          <p>&nbsp;</p>
+        </div>
+        <div class="box-content-total">
+          <div class="box-content-left">
+            <p>Total Monthly Expenses:</p>
+          </div>
+          <div class="box-content-right">
+            <p>
+              <input name="totalExpenses" type="text"  id="totalExpenses" value="$0" readonly>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="box-content-space">
+        <p>&nbsp;</p>
+      </div>
+      <div class="box-content-section">
+        <div class="box-content-heading-sub-main">
+          <p>Will you finance it on a Credit Card?</p>
+        </div>
+        <div class="box-content-left">
+          <p>APR:</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="ccInterest" type="text"  class="percentage" id="creditCardDebt" value="0%">
+          </p>
+        </div>
+        <div class="box-content-left">
+          <p>Monthy Payment:</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="minPayment"class="numeric"  type="text" id="medicalExpensesDebt" value="$0">
+          </p>
+        </div>
+
+      
+      <div class="box-content-space">
+        <p>&nbsp;</p>
+      </div></div>
+      <div class="box-content-section">
+        <div class="box-content-heading-sub-main">
+          <p>Will you finance it with a Loan?</p>
+        </div>
+        <div class="box-content-left">
+          <p>APR:</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="loanInterest" type="text"  class="percentage" id="loanInterest" value="0%">
+          </p>
+        </div>
+        <div class="box-content-left">
+          <p>Loan Term (Months):</p>
+        </div>
+        <div class="box-content-right">
+          <p>
+            <input name="loanMonths" type="text" id="loanMonths" value="0">
+          </p>
+        </div>
+
+      
+      <div class="box-content-space">
+        <p>&nbsp;</p>
+      </div></div>
+      <div class="box-content-left">
+        <p>&nbsp;</p>
+      </div>
+      <div class="box-content-right">
+        <p>
+          <input type="submit" name="button" id="button" value="Submit">
+        </p>
+      </div>
+      <p>&nbsp;</p>
+    </div>
+    <p>&nbsp;</p>
+  </div>
+</form>
+</body>
+</html>
